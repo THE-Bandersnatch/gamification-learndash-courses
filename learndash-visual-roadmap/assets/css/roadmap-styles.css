@@ -1,0 +1,825 @@
+/* LearnDash Visual Roa/* SVG Path - Behind modules but above zones */
+.ldvr-path-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+
+.ldvr-main-path {
+    stroke: #d1d5db;
+    stroke-width: 4;
+    stroke-dasharray: 10, 5;
+    opacity: 0.6;
+    animation: dash 30s linear infinite;
+}
+
+.ldvr-progress-path {
+    stroke: #10b981;
+    stroke-width: 6;
+    opacity: 1;
+    filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.3));
+}tyles */
+
+.ldvr-curved-roadmap {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    margin: 40px auto;
+    background: #f8fafc;
+    border-radius: 20px;
+    padding: 40px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.ldvr-landscape {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background: linear-gradient(to bottom, #e0f2fe 0%, #f0f9ff 100%);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* SVG Path */
+.ldvr-path-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.ldvr-main-path {
+    stroke: #e0e0e0;
+    stroke-width: 8;
+    stroke-dasharray: 20, 10;
+    animation: dash 30s linear infinite;
+}
+
+.ldvr-progress-path {
+    stroke: #10b981;
+    stroke-width: 10;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: -1000;
+    }
+}
+
+/* Themed Zones */
+.ldvr-zones {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    z-index: 1;
+}
+
+.ldvr-zone {
+    position: relative;
+    overflow: hidden;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.ldvr-zone:hover {
+    opacity: 0.4;
+}
+
+.zone-decoration {
+    position: absolute;
+    font-size: 100px;
+    opacity: 0.2;
+    animation: float 6s ease-in-out infinite;
+}
+
+.zone-1 .zone-decoration {
+    top: 20%;
+    left: 50%;
+    animation-delay: 0s;
+}
+
+.zone-2 .zone-decoration {
+    top: 60%;
+    right: 20%;
+    animation-delay: 1s;
+}
+
+.zone-3 .zone-decoration {
+    bottom: 30%;
+    left: 30%;
+    animation-delay: 2s;
+}
+
+.zone-4 .zone-decoration {
+    top: 40%;
+    right: 40%;
+    animation-delay: 3s;
+}
+
+.zone-5 .zone-decoration {
+    bottom: 20%;
+    right: 30%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}
+
+/* Modules along the path - Above SVG paths */
+.ldvr-modules-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.ldvr-path-module {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 15;
+}
+
+.ldvr-module-marker {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 3px solid #e0e0e0;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Add larger invisible hover area for better interaction */
+.ldvr-module-marker::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    z-index: -1;
+}
+
+.ldvr-path-module.completed .ldvr-module-marker {
+    border-color: #10b981;
+    background: #d1fae5;
+}
+
+.ldvr-path-module.current .ldvr-module-marker {
+    border-color: #3b82f6;
+    background: #dbeafe;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.ldvr-path-module.locked .ldvr-module-marker {
+    border-color: #9ca3af;
+    background: #f3f4f6;
+    opacity: 0.7;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 4px 30px rgba(59, 130, 246, 0.5);
+        transform: scale(1.05);
+    }
+}
+
+.marker-icon {
+    font-size: 24px;
+    margin-bottom: 2px;
+}
+
+.marker-number {
+    font-size: 12px;
+    font-weight: bold;
+    color: #374151;
+}
+
+/* Module Popup - Fixed for better hover detection */
+.ldvr-module-popup {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    max-width: 250px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+.ldvr-module-popup h4,
+.ldvr-module-popup p {
+    white-space: normal;
+}
+
+.ldvr-module-popup::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid white;
+}
+
+/* Improved hover trigger */
+.ldvr-path-module:hover .ldvr-module-popup,
+.ldvr-path-module.show-popup .ldvr-module-popup {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Ensure popup doesn't go off-screen for modules near edges */
+.ldvr-path-module:first-child .ldvr-module-popup {
+    left: 0;
+    transform: translateX(0) scale(0);
+}
+
+.ldvr-path-module:first-child:hover .ldvr-module-popup,
+.ldvr-path-module:first-child.show-popup .ldvr-module-popup {
+    transform: translateX(0) scale(1);
+}
+
+.ldvr-path-module:last-child .ldvr-module-popup {
+    right: 0;
+    left: auto;
+    transform: translateX(0) scale(0);
+}
+
+.ldvr-path-module:last-child:hover .ldvr-module-popup,
+.ldvr-path-module:last-child.show-popup .ldvr-module-popup {
+    transform: translateX(0) scale(1);
+}
+
+.ldvr-path-module.current .ldvr-module-marker {
+    animation: modulePulse 2s ease-in-out infinite;
+}
+
+@keyframes modulePulse {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 4px 30px rgba(59, 130, 246, 0.6);
+        transform: scale(1.1);
+    }
+}
+
+/* Character/Avatar */
+.ldvr-character {
+    position: absolute;
+    bottom: 50%;
+    transform: translateX(-50%);
+    transition: left 1s ease-out;
+    z-index: 15;
+}
+
+.ldvr-character span {
+    display: block;
+    font-size: 40px;
+    animation: walk 1s ease-in-out infinite;
+}
+
+@keyframes walk {
+    0%, 100% {
+        transform: translateY(0) scaleX(1);
+    }
+    25% {
+        transform: translateY(-5px) scaleX(1);
+    }
+    50% {
+        transform: translateY(0) scaleX(-1);
+    }
+    75% {
+        transform: translateY(-5px) scaleX(-1);
+    }
+}
+
+/* Stats Bar */
+.ldvr-stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+/* Grid Roadmap Styles */
+.ldvr-grid-roadmap {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.ldvr-roadmap-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.roadmap-title {
+    font-size: 2.2em;
+    color: #1a202c;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.roadmap-progress {
+    font-size: 1.1em;
+    color: #4a5568;
+    font-weight: 600;
+}
+
+.ldvr-lessons-grid {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.ldvr-lessons-grid.columns-1 {
+    grid-template-columns: 1fr;
+}
+
+.ldvr-lessons-grid.columns-2 {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+.ldvr-lessons-grid.columns-3 {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.ldvr-lessons-grid.columns-4 {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.ldvr-lesson-card {
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.ldvr-lesson-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.ldvr-lesson-card.completed {
+    border-color: #10b981;
+    background: linear-gradient(135deg, #f0fdf4, #ffffff);
+}
+
+.ldvr-lesson-card.available {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #eff6ff, #ffffff);
+}
+
+.ldvr-lesson-card.locked {
+    border-color: #9ca3af;
+    background: linear-gradient(135deg, #f9fafb, #ffffff);
+    opacity: 0.7;
+}
+
+.lesson-number {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #1f2937;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 2;
+}
+
+.ldvr-lesson-card.completed .lesson-number {
+    background: #10b981;
+}
+
+.ldvr-lesson-card.available .lesson-number {
+    background: #3b82f6;
+}
+
+.ldvr-lesson-card.locked .lesson-number {
+    background: #9ca3af;
+}
+
+.lesson-thumbnail {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.lesson-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.ldvr-lesson-card:hover .lesson-thumbnail img {
+    transform: scale(1.05);
+}
+
+.default-thumbnail {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lesson-icon {
+    font-size: 60px;
+}
+
+.lesson-content {
+    padding: 25px;
+}
+
+.lesson-title {
+    font-size: 1.4em;
+    color: #1a202c;
+    margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.lesson-excerpt {
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.lesson-status {
+    margin-bottom: 20px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.completed {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-badge.available {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status-badge.locked {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.lesson-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+}
+
+.lesson-button:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.ldvr-lesson-card.completed .lesson-button {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.ldvr-lesson-card.completed .lesson-button:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* Enhanced path styling for smooth curves */
+.ldvr-main-path,
+.ldvr-progress-path {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Ensure paths are anti-aliased */
+.ldvr-path-svg {
+    shape-rendering: geometricPrecision;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ldvr-curved-roadmap {
+        padding: 20px;
+    }
+    
+    .ldvr-landscape {
+        height: 400px;
+    }
+    
+    .zone-decoration {
+        font-size: 60px;
+    }
+    
+    .ldvr-module-marker {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .marker-icon {
+        font-size: 18px;
+    }
+    
+    .ldvr-character span {
+        font-size: 30px;
+    }
+    
+    .ldvr-stats-bar {
+        gap: 20px;
+    }
+    
+    .ldvr-grid-roadmap {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    .ldvr-lessons-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .roadmap-title {
+        font-size: 1.8em;
+    }
+    
+    .lesson-thumbnail {
+        height: 160px;
+    }
+    
+    .lesson-content {
+        padding: 20px;
+    }
+}
+
+/* Animation Styles */
+.ldvr-grid-roadmap[data-animation="true"] .ldvr-lesson-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: cardAppear 0.6s ease forwards;
+}
+
+.ldvr-grid-roadmap[data-animation="true"] .ldvr-lesson-card:nth-child(1) { animation-delay: 0.1s; }
+.ldvr-grid-roadmap[data-animation="true"] .ldvr-lesson-card:nth-child(2) { animation-delay: 0.2s; }
+.ldvr-grid-roadmap[data-animation="true"] .ldvr-lesson-card:nth-child(3) { animation-delay: 0.3s; }
+.ldvr-grid-roadmap[data-animation="true"] .ldvr-lesson-card:nth-child(4) { animation-delay: 0.4s; }
+.ldvr-grid-roadmap[data-animation="true"] .ldvr-lesson-card:nth-child(5) { animation-delay: 0.5s; }
+.ldvr-grid-roadmap[data-animation="true"] .ldvr-lesson-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes cardAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes moduleAppear {
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Add this to your roadmap-styles.css file or create a new file */
+
+/* Full Screen Roadmap Styles */
+.page-template-default .ldvr-curved-roadmap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    z-index: 9999;
+    background: #f8fafc;
+}
+
+/* Hide page header and other elements when roadmap is displayed */
+body.has-roadmap .site-header,
+body.has-roadmap .site-footer,
+body.has-roadmap .entry-header,
+body.has-roadmap .page-header,
+body.has-roadmap .ast-container, /* Astra theme */
+body.has-roadmap .bb-header-aside, /* BuddyBoss theme */
+body.has-roadmap .bb-buddypanel,
+body.has-roadmap #wpadminbar {
+    display: none !important;
+}
+
+/* Full height landscape */
+.ldvr-curved-roadmap.fullscreen .ldvr-landscape {
+    height: calc(100vh - 120px); /* Minus stats bar */
+    max-height: none;
+    border-radius: 0;
+}
+
+/* Adjust module positions for full screen */
+.ldvr-curved-roadmap.fullscreen .ldvr-path-module {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Larger zones for full screen */
+.ldvr-curved-roadmap.fullscreen .ldvr-zones {
+    height: 100%;
+}
+
+/* Exit fullscreen button */
+.ldvr-fullscreen-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.ldvr-fullscreen-toggle:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+/* Ensure Dashicons are loaded for the fullscreen toggle */
+.ldvr-fullscreen-toggle .dashicons {
+    font-family: dashicons;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+}
+
+/* Fallback if Dashicons are not loaded */
+.ldvr-fullscreen-toggle .dashicons:before {
+    content: "×";
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Better path visibility */
+.ldvr-curved-roadmap .ldvr-main-path {
+    stroke-width: 12;
+    stroke: rgba(255, 255, 255, 0.8);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.ldvr-curved-roadmap .ldvr-progress-path {
+    stroke-width: 10;
+}
+
+/* Enhanced module popups for better visibility */
+.ldvr-module-popup {
+    min-width: 250px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Stats bar at bottom */
+.ldvr-curved-roadmap.fullscreen .ldvr-stats-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile fullscreen adjustments */
+@media (max-width: 768px) {
+    .ldvr-curved-roadmap.fullscreen .ldvr-landscape {
+        height: calc(100vh - 100px);
+    }
+    
+    .ldvr-fullscreen-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+/* Add entrance animation */
+.ldvr-curved-roadmap.fullscreen {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
