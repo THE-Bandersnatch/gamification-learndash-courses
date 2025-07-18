@@ -447,4 +447,96 @@
         $('body').css('overflow', 'hidden');
     }
 
+    // Add this function to your existing roadmap-scripts.js file
+// This only fixes the popup positioning issue
+
+/**
+ * Smart popup positioning to keep it always visible
+ */
+function positionPopup($module, $popup) {
+    // Get container dimensions
+    const $container = $('.ldvr-landscape');
+    const containerOffset = $container.offset();
+    const containerWidth = $container.width();
+    const containerHeight = $container.height();
+    
+    // Get module position relative to container
+    const moduleOffset = $module.offset();
+    const moduleLeft = moduleOffset.left - containerOffset.left;
+    const moduleTop = moduleOffset.top - containerOffset.top;
+    const moduleWidth = $module.width();
+    const moduleHeight = $module.height();
+    
+    // Popup dimensions
+    const popupWidth = 250; // Approximate width
+    const popupHeight = 150; // Approximate height
+    const padding = 20; // Edge padding
+    
+    // Reset classes
+    $popup.removeClass('popup-left popup-right popup-bottom popup-top');
+    
+    // Calculate module center
+    const moduleCenterX = moduleLeft + (moduleWidth / 2);
+    const moduleCenterY = moduleTop + (moduleHeight / 2);
+    
+    // Default positioning (above module, centered)
+    let positionClass = '';
+    let customCSS = {};
+    
+    // Vertical positioning
+    if (moduleTop < popupHeight + padding) {
+        // Too close to top - show below
+        positionClass += ' popup-bottom';
+    } else {
+        // Default - show above
+        positionClass += ' popup-top';
+    }
+    
+    // Horizontal positioning
+    if (moduleCenterX - (popupWidth / 2) < padding) {
+        // Too close to left edge
+        positionClass += ' popup-align-left';
+        customCSS.left = padding + 'px';
+        customCSS.transform = 'translateX(0)';
+    } else if (moduleCenterX + (popupWidth / 2) > containerWidth - padding) {
+        // Too close to right edge
+        positionClass += ' popup-align-right';
+        customCSS.right = padding + 'px';
+        customCSS.left = 'auto';
+        customCSS.transform = 'translateX(0)';
+    }
+    
+    // Apply positioning
+    if (positionClass) {
+        $popup.addClass(positionClass.trim());
+    }
+    
+    // Apply any custom CSS
+    if (Object.keys(customCSS).length > 0) {
+        $popup.css(customCSS);
+    }
+}
+
+// Update the hover handler in your existing code
+// Find the setupModuleHovers function and update it like this:
+$('.ldvr-path-module').each(function() {
+    const $module = $(this);
+    const $popup = $module.find('.ldvr-module-popup');
+    
+    $module.on('mouseenter', function() {
+        if (!$module.hasClass('locked')) {
+            // Position popup before showing
+            positionPopup($module, $popup);
+            
+            $module.find('.ldvr-module-marker').addClass('hover');
+            $module.addClass('show-popup');
+        }
+    });
+    
+    $module.on('mouseleave', function() {
+        $module.find('.ldvr-module-marker').removeClass('hover');
+        $module.removeClass('show-popup');
+    });
+});
+
 })(jQuery);

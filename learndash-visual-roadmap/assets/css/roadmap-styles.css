@@ -823,3 +823,45 @@ body.has-roadmap #wpadminbar {
         transform: scale(1);
     }
 }
+
+/* Add these CSS rules to your existing roadmap-styles.css */
+/* Only the popup positioning fixes - nothing else changed */
+
+/* Popup positioning variants */
+.ldvr-module-popup.popup-bottom {
+    bottom: auto;
+    top: 70px;
+}
+
+.ldvr-module-popup.popup-bottom::after {
+    bottom: auto;
+    top: -8px;
+    border-top: none;
+    border-bottom: 8px solid white;
+}
+
+.ldvr-module-popup.popup-align-left {
+    left: 0 !important;
+    transform: translateX(0) scale(0) !important;
+}
+
+.ldvr-path-module.show-popup .ldvr-module-popup.popup-align-left {
+    transform: translateX(0) scale(1) !important;
+}
+
+.ldvr-module-popup.popup-align-right {
+    right: 0 !important;
+    left: auto !important;
+    transform: translateX(0) scale(0) !important;
+}
+
+.ldvr-path-module.show-popup .ldvr-module-popup.popup-align-right {
+    transform: translateX(0) scale(1) !important;
+}
+
+/* Ensure popup stays within viewport on mobile */
+@media (max-width: 768px) {
+    .ldvr-module-popup {
+        max-width: calc(100vw - 40px);
+    }
+}
