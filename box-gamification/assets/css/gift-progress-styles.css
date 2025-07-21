@@ -74,29 +74,36 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    background: #2c3e50;
-    border: 2px solid white;
-    width: 50px;
-    height: 50px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border: 3px solid white;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     cursor: pointer;
     z-index: 100;
-    transition: all 0.3s;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(231, 76, 60, 0.4), 0 2px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: bold;
+}
+
+.ldvr-close-fullscreen:before {
+    content: "✕";
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .ldvr-close-fullscreen svg {
-    width: 24px;
-    height: 24px;
-    color: white;
+    display: none; /* Hide SVG, use text instead */
 }
 
 .ldvr-close-fullscreen:hover {
-    background: #34495e;
-    transform: scale(1.1);
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 6px 25px rgba(231, 76, 60, 0.6), 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Progress summary at top */
@@ -166,43 +173,55 @@
 .nav-arrow {
     position: absolute;
     top: 0;
-    background: #2c3e50;
-    border: 2px solid white;
-    width: 50px;
-    height: 50px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border: 3px solid white;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     cursor: pointer;
     z-index: 20;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4), 0 2px 10px rgba(0, 0, 0, 0.2);
     color: white;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .nav-arrow:hover:not(:disabled) {
-    background: #34495e;
-    transform: scale(1.1);
+    background: linear-gradient(135deg, #2980b9, #1f618d);
+    transform: scale(1.15);
+    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.6), 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .nav-arrow:disabled {
-    opacity: 0.3;
+    opacity: 0.4;
     cursor: not-allowed;
-    background: #95a5a6;
+    background: linear-gradient(135deg, #bdc3c7, #95a5a6);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: none;
 }
 
 .nav-arrow-left {
-    left: -80px;
+    left: -90px;
+}
+
+.nav-arrow-left:before {
+    content: "◀";
 }
 
 .nav-arrow-right {
-    right: -80px;
+    right: -90px;
+}
+
+.nav-arrow-right:before {
+    content: "▶";
 }
 
 .nav-arrow svg {
-    width: 24px;
-    height: 24px;
+    display: none; /* Hide SVG, use text instead */
 }
 
 /* Steps container */
@@ -255,30 +274,44 @@
         #1f8bc5 10px
     );
     z-index: 1;
+    /* Fix: Stop at the center of the last completed step */
+    transition: width var(--bar-transition-speed) cubic-bezier(0.915, 0.015, 0.300, 1.005);
 }
 
-/* Steps - Dynamic width */
+/* Steps - Dynamic width with better responsive handling */
 .progress_inner__step {
     font-size: var(--step-font-size);
-    padding: 0 var(--step-padding);
+    padding: 0 5px; /* Reduced padding for better fit */
     transition: all .4s;
     text-align: center;
     position: relative;
     flex: 1;
     z-index: 5;
+    /* Better spacing to prevent overlap */
+    margin: 0 2px;
+    min-width: 80px; /* Reduced minimum width */
+    max-width: 150px; /* Prevent too wide on large screens */
 }
 
 .progress_inner__step label {
     padding-top: var(--step-gap);
-    top: -20px;
+    top: 50px;
     display: block;
     position: relative;
     cursor: pointer;
     color: var(--color-dark);
-    font-size: 14px;
-    line-height: 1.3;
+    font-size: 16px; /* Increased from 14px */
+    line-height: 1.4; /* Improved line height */
     font-weight: 700;
     word-wrap: break-word;
+    /* Fix: Better spacing and visibility */
+    margin-top: 10px;
+    padding: 5px 8px;
+    text-align: center;
+    min-height: 50px; /* Ensure adequate space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Step counter circles */
@@ -306,7 +339,7 @@
     z-index: 5;
 }
 
-/* Dynamic step numbers */
+/* Dynamic step numbers - Extended for more lessons */
 .progress_inner__step:nth-child(1):before { content: '1'; }
 .progress_inner__step:nth-child(2):before { content: '2'; }
 .progress_inner__step:nth-child(3):before { content: '3'; }
@@ -317,6 +350,16 @@
 .progress_inner__step:nth-child(8):before { content: '8'; }
 .progress_inner__step:nth-child(9):before { content: '9'; }
 .progress_inner__step:nth-child(10):before { content: '10'; }
+.progress_inner__step:nth-child(11):before { content: '11'; }
+.progress_inner__step:nth-child(12):before { content: '12'; }
+.progress_inner__step:nth-child(13):before { content: '13'; }
+.progress_inner__step:nth-child(14):before { content: '14'; }
+.progress_inner__step:nth-child(15):before { content: '15'; }
+.progress_inner__step:nth-child(16):before { content: '16'; }
+.progress_inner__step:nth-child(17):before { content: '17'; }
+.progress_inner__step:nth-child(18):before { content: '18'; }
+.progress_inner__step:nth-child(19):before { content: '19'; }
+.progress_inner__step:nth-child(20):before { content: '20'; }
 
 /* Step states */
 .progress_inner__step:hover:not(.locked) {
@@ -614,15 +657,114 @@ input[type="radio"] {
     50% { transform: scale(1.1); }
 }
 
-/* Responsive design */
+/* Keyboard navigation hints */
+.keyboard-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    opacity: 0.7;
+    z-index: 10;
+    display: none;
+}
+
+.fullscreen-mode .keyboard-hint {
+    display: block;
+}
+
+.keyboard-hint .key {
+    background: #fff;
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin: 0 2px;
+    font-weight: bold;
+}
+
+/* Better focus states for accessibility */
+.nav-arrow:focus {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+.progress_inner__step:focus-within:before {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+/* Improved button states */
+.nav-arrow:active:not(:disabled) {
+    transform: scale(1.05);
+}
+
+.ldvr-close-fullscreen:active {
+    transform: scale(1.05) rotate(90deg);
+}
+
+/* Responsive design - Improved with multiple breakpoints */
+@media (max-width: 1200px) {
+    .progress_inner__step {
+        min-width: 70px;
+        margin: 0 1px;
+    }
+    
+    .progress_inner__step label {
+        font-size: 14px;
+    }
+    
+    .nav-arrow-left {
+        left: -70px;
+    }
+    
+    .nav-arrow-right {
+        right: -70px;
+    }
+}
+
+@media (max-width: 992px) {
+    .ldvr-gift-progress {
+        padding: 30px 15px;
+    }
+    
+    .progress_inner__step {
+        min-width: 60px;
+        margin: 0 1px;
+    }
+    
+    .progress_inner__step label {
+        font-size: 13px;
+        padding: 3px 4px;
+        min-height: 45px;
+    }
+    
+    .nav-arrow {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .nav-arrow-left {
+        left: -60px;
+    }
+    
+    .nav-arrow-right {
+        right: -60px;
+    }
+}
+
 @media (max-width: 768px) {
     .ldvr-gift-progress {
         padding: 20px 10px;
     }
     
     .nav-arrow {
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
     }
     
     .nav-arrow-left {
@@ -634,36 +776,120 @@ input[type="radio"] {
     }
     
     .progress_inner__step {
-        font-size: 12px;
+        font-size: 11px;
+        margin: 0 1px;
+        min-width: 50px;
+        max-width: 80px;
     }
     
     .progress_inner__step:before {
         width: 30px;
         height: 30px;
         line-height: 30px;
-        font-size: 14px;
+        font-size: 12px;
     }
     
     .progress_inner__step label {
         font-size: 11px;
-        padding-top: 35px;
+        padding: 2px 3px;
+        min-height: 35px;
+        line-height: 1.2;
     }
     
     .progress_inner__tabs .tab {
-        padding: 20px;
+        padding: 15px;
     }
     
     .progress_inner__tabs .tab h1 {
-        font-size: 20px;
+        font-size: 18px;
     }
     
     .ldvr-progress-summary {
-        gap: 20px;
+        gap: 15px;
         flex-wrap: wrap;
+        padding: 15px;
     }
     
     .stat-value {
+        font-size: 18px;
+    }
+    
+    .ldvr-close-fullscreen {
+        width: 50px;
+        height: 50px;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .ldvr-close-fullscreen:before {
         font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ldvr-gift-progress {
+        padding: 15px 5px;
+    }
+    
+    .progress_inner__step {
+        min-width: 40px;
+        max-width: 60px;
+        margin: 0;
+    }
+    
+    .progress_inner__step:before {
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        font-size: 10px;
+    }
+    
+    .progress_inner__step label {
+        font-size: 9px;
+        padding: 1px 2px;
+        min-height: 30px;
+    }
+    
+    .nav-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .nav-arrow-left {
+        left: -45px;
+    }
+    
+    .nav-arrow-right {
+        right: -45px;
+    }
+    
+    .ldvr-progress-summary {
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .progress-stat {
+        min-width: 80px;
+    }
+    
+    .stat-value {
+        font-size: 16px;
+    }
+    
+    .stat-label {
+        font-size: 12px;
+    }
+}
+
+/* Fix for very wide screens to prevent label stretching */
+@media (min-width: 1400px) {
+    .progress_inner__step {
+        max-width: 180px;
+    }
+    
+    .progress_inner__step label {
+        font-size: 16px;
     }
 }
 

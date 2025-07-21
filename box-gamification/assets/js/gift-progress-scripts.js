@@ -54,8 +54,12 @@
         const totalLessons = window.totalLessons;
         
         if (completedLessons > 0) {
-            const progressPercent = (completedLessons / totalLessons) * 100;
+            // Fix: Calculate progress to stop at the center of the last completed lesson
+            const stepWidth = 100 / totalLessons;
+            const progressPercent = ((completedLessons - 1) * stepWidth) + (stepWidth / 2);
             $('.progress_inner__bar').css('width', progressPercent + '%');
+        } else {
+            $('.progress_inner__bar').css('width', '0%');
         }
     }
     
@@ -72,9 +76,16 @@
                 } else if (e.key === 'ArrowRight') {
                     e.preventDefault();
                     window.navigateStep('next');
+                } else if (e.key === 'Escape' && $('.ldvr-gift-progress').hasClass('fullscreen-mode')) {
+                    e.preventDefault();
+                    window.toggleFullscreen();
                 }
             }
         });
+        
+        // Add focus states for better accessibility
+        $('.nav-arrow').attr('tabindex', '0');
+        $('.ldvr-close-fullscreen').attr('tabindex', '0');
     }
     
     /**
@@ -255,6 +266,13 @@
         
         // Calculate build stage based on completed lessons, not current step
         const progressPercent = (completedLessons / totalLessons) * 100;
+        
+        // Update progress bar to match completed lessons
+        if (completedLessons > 0) {
+            const stepWidth = 100 / totalLessons;
+            const barProgressPercent = ((completedLessons - 1) * stepWidth) + (stepWidth / 2);
+            $('.progress_inner__bar').css('width', barProgressPercent + '%');
+        }
         
         // Reset all elements first
         $status.find('div').css('opacity', '0');

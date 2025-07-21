@@ -198,12 +198,13 @@ class LearnDashVisualRoadmap {
              data-completed-lessons="<?php echo esc_attr($completed_count); ?>">
             
             <?php if ($atts['fullscreen'] === 'true'): ?>
-                <button class="ldvr-close-fullscreen" onclick="toggleFullscreen()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
+                <button class="ldvr-close-fullscreen" onclick="toggleFullscreen()" title="Close Fullscreen (ESC)">
                 </button>
+                
+                <!-- Keyboard navigation hints -->
+                <div class="keyboard-hint">
+                    Use <span class="key">←</span> <span class="key">→</span> arrow keys to navigate • <span class="key">ESC</span> to close
+                </div>
             <?php endif; ?>
             
             <!-- Course Progress Summary - Moved to top -->
@@ -226,15 +227,9 @@ class LearnDashVisualRoadmap {
             <div class="progress">
                 <div class="progress_inner">
                     <!-- Navigation Arrows -->
-                    <button class="nav-arrow nav-arrow-left" onclick="navigateStep('prev')" <?php echo $current_step <= 1 ? 'disabled' : ''; ?>>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-                        </svg>
+                    <button class="nav-arrow nav-arrow-left" onclick="navigateStep('prev')" title="Previous Lesson" <?php echo $current_step <= 1 ? 'disabled' : ''; ?>>
                     </button>
-                    <button class="nav-arrow nav-arrow-right" onclick="navigateStep('next')" <?php echo $current_step >= $total_lessons ? 'disabled' : ''; ?>>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                            <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
-                        </svg>
+                    <button class="nav-arrow nav-arrow-right" onclick="navigateStep('next')" title="Next Lesson" <?php echo $current_step >= $total_lessons ? 'disabled' : ''; ?>>
                     </button>
                     
                     <!-- Step Labels -->
