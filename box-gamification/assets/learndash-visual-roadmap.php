@@ -197,15 +197,18 @@ class LearnDashVisualRoadmap {
              data-total-lessons="<?php echo esc_attr($total_lessons); ?>"
              data-completed-lessons="<?php echo esc_attr($completed_count); ?>">
             
-            <?php if ($atts['fullscreen'] === 'true'): ?>
-                <button class="ldvr-close-fullscreen" onclick="toggleFullscreen()" title="Close Fullscreen (ESC)">
-                </button>
-                
-                <!-- Keyboard navigation hints -->
-                <div class="keyboard-hint">
-                    Use <span class="key">←</span> <span class="key">→</span> arrow keys to navigate • <span class="key">ESC</span> to close
-                </div>
-            <?php endif; ?>
+            <!-- Fullscreen Toggle Button (shown when not in fullscreen) -->
+            <button class="ldvr-fullscreen-toggle" onclick="toggleFullscreen(true)" title="Enter Fullscreen (F11)">
+            </button>
+            
+            <!-- Close Fullscreen Button (shown when in fullscreen) -->
+            <button class="ldvr-close-fullscreen" onclick="toggleFullscreen(false)" title="Close Fullscreen (ESC)">
+            </button>
+            
+            <!-- Keyboard navigation hints (shown only in fullscreen) -->
+            <div class="keyboard-hint">
+                Use <span class="key">←</span> <span class="key">→</span> arrow keys to navigate • <span class="key">ESC</span> to close • <span class="key">F11</span> for fullscreen
+            </div>
             
             <!-- Course Progress Summary - Moved to top -->
             <div class="ldvr-progress-summary top">

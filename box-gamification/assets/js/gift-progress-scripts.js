@@ -78,7 +78,10 @@
                     window.navigateStep('next');
                 } else if (e.key === 'Escape' && $('.ldvr-gift-progress').hasClass('fullscreen-mode')) {
                     e.preventDefault();
-                    window.toggleFullscreen();
+                    window.toggleFullscreen(false);
+                } else if (e.key === 'F11' && !$('.ldvr-gift-progress').hasClass('fullscreen-mode')) {
+                    e.preventDefault();
+                    window.toggleFullscreen(true);
                 }
             }
         });
@@ -86,6 +89,10 @@
         // Add focus states for better accessibility
         $('.nav-arrow').attr('tabindex', '0');
         $('.ldvr-close-fullscreen').attr('tabindex', '0');
+        $('.ldvr-fullscreen-toggle').attr('tabindex', '0');
+        
+        // Make the main container focusable for keyboard navigation
+        $('.ldvr-gift-progress').attr('tabindex', '-1');
     }
     
     /**
@@ -483,8 +490,26 @@
     }
     
     // Global function for fullscreen toggle
-    window.toggleFullscreen = function() {
-        $('.ldvr-gift-progress').removeClass('fullscreen-mode');
+    window.toggleFullscreen = function(enterFullscreen) {
+        const $tracker = $('.ldvr-gift-progress');
+        
+        if (enterFullscreen === true || (enterFullscreen === undefined && !$tracker.hasClass('fullscreen-mode'))) {
+            // Enter fullscreen mode
+            $tracker.addClass('fullscreen-mode');
+            
+            // Disable body scroll
+            $('body').css('overflow', 'hidden');
+            
+            // Focus on the tracker for keyboard navigation
+            $tracker.focus();
+            
+        } else {
+            // Exit fullscreen mode
+            $tracker.removeClass('fullscreen-mode');
+            
+            // Re-enable body scroll
+            $('body').css('overflow', '');
+        }
     };
     
     // Add required CSS for animations
