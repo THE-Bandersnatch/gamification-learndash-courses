@@ -1,1 +1,11 @@
 [ld_curved_roadmap course_id="6740" theme="adventure"]
+
+
+
+docker run -d --name short-video-maker`
+-- restart unless-stoped`
+- p 3123:3123`
+- e PEXEL_API_KEY=5KE6pLDk6FS4tyBjMxuoSpoA6iyyEs4XCYrGTlh2qSV44LbZ2hea2G9X`
+- e LOG_LEVEL=debug`
+- v /home/chitabtmawalo/Desktop/videooos
+gyoridavid/short-video-maker:latest-tiny
